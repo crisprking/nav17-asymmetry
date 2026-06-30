@@ -1,0 +1,23 @@
+=== substitution capacity (synthetic, validation only) ===
+                    sub_nav  m_current  nav1_7  substitution_index
+cell_type                                                         
+Sympathetic_chol         53         64      33                3.44
+Sympathetic_NA           54         66      35                3.33
+DRG_Adelta_LTMR          40         29      38                1.77
+DRG_peptidergic          31         20      50                1.00
+DRG_nonpeptidergic       24         16      46                0.85 
+
+=== asymmetry verdict ===
+  nociceptor_index  : 1.207
+  autonomic_index   : 3.387
+  observed_gap      : 2.18
+  call              : SUPPORTS_H1 (autonomic can substitute, nociceptor cannot)
+  sha256            : 34e28baf2f3b46b7
+
+=== D1 decision at an example fitted autonomic leak gamma_auto=0.35 ===
+  gamma_auto: 0.35
+  max_safe_chronic_block_U: 0.386
+  required_gamma_noci: 1.842
+  thresholds: {'ANALGESIA_MIN': 0.25, 'AUTO_MAX': 0.1}
+  note: required_gamma_noci is an ASSUMPTION-driven decision boundary, not a measured threshold (set largely by ANALGESIA_MIN/AUTO_MAX).
+  required_gamma_noci_range: [2.5, 1.066]
