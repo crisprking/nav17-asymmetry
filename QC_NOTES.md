@@ -1,5 +1,14 @@
 # QC_NOTES.md — evidence tiering and senior-review audit
 
+> **Changelog (this revision).** Three surgical corrections vs. the prior version,
+> each closing a flagged overclaim or adding a verified anchor:
+> (1) the acute-block row no longer reads "(TI ≈ 1)" — Mulcahy reports *overlapping
+> exposures*, not a calculated therapeutic index;
+> (2) three TIER-1 anchors added — **Regan 2024 (Circulation)**, **Iseppon 2024
+> (Neurobiology of Pain)**, **MacDonald 2021 (Neuron)** — with the Deng/MacDonald
+> *mechanism* dispute flagged explicitly;
+> (3) audit footer updated to the current notebook revision. No TIER-2/3 numbers changed.
+
 This file is the result of a line-by-line quality-control pass over the analysis
 notebook. It exists so that nothing in this repo gets cited at the wrong
 confidence level. **The honesty about tiers is the deliverable, not a disclaimer.**
@@ -24,13 +33,24 @@ Three tiers are used:
 | Family contrast: `SCN1A` constrained, `SCN5A` intermediate | LOEUF 0.11 / 0.38 | gnomAD v4.1 | Reproduces (G1, G6) |
 | LoF-tolerance is tissue-stratified (peripheral Nav1.7/1.8/1.9 tolerant; CNS/cardiac constrained) | — | gnomAD v4.1 (G6/G6b) | Reproduces |
 | `SCN9A` disease associations are pain/sensory-dominated, not cardiovascular | 16 pain vs 7 CV-binned | Open Targets Platform GraphQL (live, HTTP 200) | Reproduces (G-OpenTargets). *Caveat below.* |
-| CIP (genetic Nav1.7 loss) is **cardiovascular-silent** in HPO; footprint is sudomotor + anosmia, unlike reference dysautonomias | CV subsystem count = 0 (CIP) vs ≥1 (HSAN4, familial dysautonomia) | HPO `phenotype.hpoa` (G8/G9) | Reproduces |
+| CIP (genetic Nav1.7 loss) is **cardiovascular-silent** in HPO; footprint is sudomotor + anosmia, unlike reference dysautonomias | CV subsystem count = 0 (CIP) vs ≥1 (HSAN4, familial dysautonomia) | HPO `phenotype.hpoa` (G8/G9) | Reproduces. *This is **absence of annotated CV terms**, not a measured longitudinal BP study — caption accordingly.* |
 | `SCN9A` missense is a "VUS swamp"; standard predictors calibrate on controls but not here | 69% VUS; controls AUROC 0.83–0.99 | ClinVar via myvariant.info (G2/G4) | Reproduces |
-| Acute Nav1.7 block drops BP at analgesic exposure (TI ≈ 1) | 10–20 mmHg at 3–5× IC50; IC50 39 nM | **Mulcahy et al., Br J Pharmacol 2024**, 181(17):3160–3171, doi:10.1111/bph.16398 | Verified |
-| Nav1.7 BP effect is **on-target** (binding-site-mutant mouse); block silences C-fibers; opioid-independent | — | **Deng et al., Neuron 2023**, 111(17):2642–2659.e13, PMID 37352856 (open access) | Verified |
-| GDC-0276 first-in-human: liver-transaminase elevations + hypotension; hypotension dose-limiting in the fast cyclodextrin formulation | — | **Rothenberg et al., Clin Drug Investig 2019**, 39(9):873–887, PMID 31172446 | Verified — the *published* anchor for rate-dependence |
+| Acute Nav1.7 block drops BP at the **same exposures that relieve pain** (efficacy and autonomic windows overlap; **not** a calculated therapeutic index) | 10–20 mmHg at 3–5× IC50; IC50 39 nM | **Mulcahy et al., Br J Pharmacol 2024**, 181(17):3160–3171, doi:10.1111/bph.16398 | Verified. Paper states "similar exposures"; *do not write "TI ≈ 1."* |
+| **In humans**, a peripherally-restricted Nav1.7 inhibitor (no brain penetrance) produced dose-dependent autonomic effects → toxicity is **on-target and peripheral** | human IC50 85 nmol/L; HRV + baroreflex decline; on-target confirmed by JzTx-V peptide analogue; no brain penetrance (NHP autoradiography) | **Regan et al., Circulation 2024**, doi:10.1161/CIRCULATIONAHA.123.067331, PMC11027978 | Verified (re-confirmed against primary source this revision). **Strongest clinical anchor in the project.** |
+| Independent 2024 statement of the failure thesis | "specific Nav1.7 channel blockers will fail as analgesic drugs"; autonomic function normal in genetic nulls | **Iseppon et al., Neurobiology of Pain 2024**, PMID 39559752 (Wood/UCL) | Verified — verbatim quote. Note: this means the thesis is **convergent**, not contrarian. |
+| Nav1.7 BP effect is **on-target** (binding-site-mutant mouse); block silences C-fibers; **opioid-independent** | — | **Deng et al., Neuron 2023**, 111(17):2642–2659.e13, PMID 37352856 (open access) | Verified. *See contested-mechanism note below.* |
+| GDC-0276 first-in-human: liver-transaminase elevations + hypotension; hypotension dose-limiting in the fast cyclodextrin formulation | — | **Rothenberg et al., Clin Drug Investig 2019**, 39(9):873–887, PMID 31172446 | Verified — the *published* anchor for the exposure/rate observation |
 | Two acyl-sulfonamide candidates are GDC-0276 / GDC-0310 | — | Safina & Sutherlin et al., J Med Chem 2021, 64(6):2953–2966 | Verified |
 | Independent statement of the asymmetry (BP falls with ST-2560 in primates; normal in LOF patients) | — | Pharmacological Reviews 2025 review | Verified |
+
+**Contested mechanism (cite both, settle neither).** Deng 2023 and MacDonald 2021
+were published in the **same journal** and disagree on the mechanism of CIP
+analgesia: **MacDonald et al., Neuron 2021**, 109(9):1497–1512, PMID 33823138
+(Wood/UCL) reports Nav1.7-null mice have "essentially normal nociceptor activity"
+and that human Nav1.7-null analgesia is **opioid-dependent and naloxone-reversible**
+— the opposite of Deng on both counts. The autonomic-asymmetry thesis in this repo
+does **not** depend on which is right, but any write-up must present the mechanism as
+**unsettled**, not as Deng-settled.
 
 **Caveat on the Open Targets 16-vs-7 split:** the keyword binner mis-files
 *primary erythermalgia* (= erythromelalgia, a Nav1.7 **gain-of-function pain**
@@ -60,6 +80,7 @@ be framed as "under these illustrative efficacy/safety cutoffs, the lever needs 
 nociceptor that barely compensates" — i.e., a hypothesis-sharpening device that
 names a bench experiment, not a result. The decisive experiment is unchanged:
 **chronic vs acute Nav1.7 block — does the BP effect wane while analgesia grows?**
+(see `PREREGISTRATION.md`).
 
 ---
 
@@ -125,7 +146,9 @@ index, is the load-bearing next step.
 
 ---
 
-*Audit performed against `notebooks/nav1-7-project.ipynb` (61 cells). External
-citations re-verified against primary sources. The `nav17/` engine is an
-extracted, unit-tested reimplementation of the notebook's core; `python -m pytest
--q` reproduces the synthetic verdict (gap 2.18) and the γ_noci = 1.84 boundary.*
+*Audit performed against the current research notebook (`nav1-7-project`, 65-cell
+revision). External citations re-verified against primary sources, including a
+fresh re-confirmation of Regan 2024 (Circulation) at this revision. The `nav17/`
+engine is an extracted, unit-tested reimplementation of the notebook's core;
+`python -m pytest -q` reproduces the synthetic verdict (gap 2.18) and the
+γ_noci = 1.84 boundary.*
